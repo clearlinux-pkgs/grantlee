@@ -6,7 +6,7 @@
 #
 Name     : grantlee
 Version  : 5.1.0
-Release  : 1
+Release  : 2
 URL      : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz
 Source0  : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz
 Source99 : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz.asc
