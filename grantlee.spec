@@ -6,22 +6,23 @@
 #
 Name     : grantlee
 Version  : 5.1.0
-Release  : 2
+Release  : 3
 URL      : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz
 Source0  : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz
-Source99 : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz.asc
+Source1 : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: grantlee-lib
-Requires: grantlee-license
+Requires: grantlee-lib = %{version}-%{release}
+Requires: grantlee-license = %{version}-%{release}
 BuildRequires : boost-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-qmake
 BuildRequires : doxygen
-BuildRequires : qtbase-dev qtbase-extras mesa-dev
+BuildRequires : qtbase-dev mesa-dev
 BuildRequires : qtscript-dev
 BuildRequires : qttools-dev
+Patch1: 0001-Remove-vestigial-ansi-flag.patch
 
 %description
 The Grantlee Libraries
@@ -32,8 +33,9 @@ The Grantlee Libraries
 %package dev
 Summary: dev components for the grantlee package.
 Group: Development
-Requires: grantlee-lib
-Provides: grantlee-devel
+Requires: grantlee-lib = %{version}-%{release}
+Provides: grantlee-devel = %{version}-%{release}
+Requires: grantlee = %{version}-%{release}
 
 %description dev
 dev components for the grantlee package.
@@ -42,7 +44,7 @@ dev components for the grantlee package.
 %package lib
 Summary: lib components for the grantlee package.
 Group: Libraries
-Requires: grantlee-license
+Requires: grantlee-license = %{version}-%{release}
 
 %description lib
 lib components for the grantlee package.
@@ -58,31 +60,40 @@ license components for the grantlee package.
 
 %prep
 %setup -q -n grantlee-5.1.0
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1535220249
-mkdir clr-build
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1568962791
+mkdir -p clr-build
 pushd clr-build
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake ..
-make  %{?_smp_mflags}
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-pushd clr-build ; make test ||: ; popd
+cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1535220249
+export SOURCE_DATE_EPOCH=1568962791
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/grantlee
-cp COPYING.LIB %{buildroot}/usr/share/doc/grantlee/COPYING.LIB
+mkdir -p %{buildroot}/usr/share/package-licenses/grantlee
+cp COPYING.LIB %{buildroot}/usr/share/package-licenses/grantlee/COPYING.LIB
 pushd clr-build
 %make_install
 popd
@@ -92,7 +103,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
 /usr/include/grantlee/abstractlocalizer.h
 /usr/include/grantlee/abstractmarkupbuilder.h
 /usr/include/grantlee/bbcodebuilder.h
@@ -123,6 +133,8 @@ popd
 /usr/include/grantlee/typeaccessor.h
 /usr/include/grantlee/util.h
 /usr/include/grantlee/variable.h
+/usr/include/grantlee_templates.h
+/usr/include/grantlee_textdocument.h
 /usr/lib64/cmake/Grantlee5/Grantlee5Config.cmake
 /usr/lib64/cmake/Grantlee5/Grantlee5ConfigVersion.cmake
 /usr/lib64/cmake/Grantlee5/GrantleeMacros.cmake
@@ -143,5 +155,5 @@ popd
 /usr/lib64/libGrantlee_TextDocument.so.5.1.0
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/grantlee/COPYING.LIB
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/grantlee/COPYING.LIB
