@@ -1,1 +1,2 @@
 0001-Remove-vestigial-ansi-flag.patch
+0002-fix-build-with-qt-5.13-gcc-8.2.patch

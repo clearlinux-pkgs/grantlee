@@ -6,7 +6,7 @@
 #
 Name     : grantlee
 Version  : 5.1.0
-Release  : 3
+Release  : 4
 URL      : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz
 Source0  : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz
 Source1 : http://downloads.grantlee.org/grantlee-5.1.0.tar.gz.asc
@@ -23,6 +23,7 @@ BuildRequires : qtbase-dev mesa-dev
 BuildRequires : qtscript-dev
 BuildRequires : qttools-dev
 Patch1: 0001-Remove-vestigial-ansi-flag.patch
+Patch2: 0002-fix-build-with-qt-5.13-gcc-8.2.patch
 
 %description
 The Grantlee Libraries
@@ -61,13 +62,14 @@ license components for the grantlee package.
 %prep
 %setup -q -n grantlee-5.1.0
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568962791
+export SOURCE_DATE_EPOCH=1570424948
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -90,7 +92,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1568962791
+export SOURCE_DATE_EPOCH=1570424948
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/grantlee
 cp COPYING.LIB %{buildroot}/usr/share/package-licenses/grantlee/COPYING.LIB
