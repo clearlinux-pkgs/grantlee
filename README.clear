@@ -1,0 +1,4 @@
+Whenever updating this package (`grantlee`) to a new version, re-autospec
+`grantleetheme`, since it installs
+/usr/lib64/grantlee/<VER>/kde_grantlee_plugin.so, where <VER> is the `grantlee`
+version.
