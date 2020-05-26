@@ -4,7 +4,7 @@
 #
 Name     : grantlee
 Version  : 5.2.0
-Release  : 8
+Release  : 9
 URL      : https://github.com/steveire/grantlee/archive/v5.2.0/grantlee-5.2.0.tar.gz
 Source0  : https://github.com/steveire/grantlee/archive/v5.2.0/grantlee-5.2.0.tar.gz
 Summary  : No detailed summary available
@@ -15,7 +15,9 @@ Requires: grantlee-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-qmake
 BuildRequires : doxygen
+BuildRequires : qtbase-dev
 BuildRequires : qtbase-dev mesa-dev
+BuildRequires : qtdeclarative-dev
 BuildRequires : qtscript-dev
 BuildRequires : qttools-dev
 
@@ -62,7 +64,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1587693292
+export SOURCE_DATE_EPOCH=1590529135
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -85,7 +87,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1587693292
+export SOURCE_DATE_EPOCH=1590529135
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/grantlee
 cp %{_builddir}/grantlee-5.2.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/grantlee/9a1929f4700d2407c70b507b3b2aaf6226a9543c
