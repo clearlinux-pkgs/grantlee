@@ -7,7 +7,7 @@
 #
 Name     : grantlee
 Version  : 5.3.1
-Release  : 11
+Release  : 12
 URL      : https://github.com/steveire/grantlee/archive/v5.3.1/grantlee-5.3.1.tar.gz
 Source0  : https://github.com/steveire/grantlee/archive/v5.3.1/grantlee-5.3.1.tar.gz
 Summary  : No detailed summary available
@@ -70,7 +70,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1710453504
+export SOURCE_DATE_EPOCH=1710453671
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -140,7 +140,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1710453504
+export SOURCE_DATE_EPOCH=1710453671
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/grantlee
 cp %{_builddir}/grantlee-%{version}/COPYING.LIB %{buildroot}/usr/share/package-licenses/grantlee/ce930e36882c6e85c21362d4b51f564863802a75 || :
